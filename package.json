@@ -1,0 +1,24 @@
+{
+  "name": "ovh-task-api",
+  "version": "1.0.0",
+  "description": "Access travaux/tasks OVH from rest endpoints",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "ovh"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gclem/ovhtask-api.git"
+  },
+  "author": "gclem",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.15.3",
+    "morgan": "^1.8.2",
+    "ovhtask-js": "^2.0.0",
+    "winston": "^2.3.1"
+  }
+}
