@@ -1,0 +1,43 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en">
+
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <script src="/socket.io/socket.io.js"></script>
+</head>
+
+<body>
+    <ul id="tail">
+    </ul>
+    <script>
+        var socket = io();
+
+        String.prototype.log =  function() {
+            var self = this;
+            var node = document.createElement("LI");                
+            var textnode = document.createTextNode(self);         
+            node.appendChild(textnode);                              
+            document.getElementById("tail").appendChild(node); 
+        }
+
+        socket.on('connect', () => { 
+            "Connected".log();
+        });
+
+        socket.on('disconnect', () => { 
+            "Disconnected".log();
+        });
+
+        socket.on('new', function (data) {
+            ("NEW | " + JSON.stringify(data)).log();
+        });
+        socket.on('update', function (data) {
+            ("UPDATE | " + JSON.stringify(data)).log();
+        });
+        socket.on('delete', function (data) {
+            ("DELETE | " + JSON.stringify(data)).log();
+        });
+    </script>
+</body>
+
+</html>

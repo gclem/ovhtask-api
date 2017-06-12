@@ -21,8 +21,10 @@ routes.get('/', function (req, res) {
 // app.use('/', v1); // Set the default version to latest.
 var categories = require('./categories');
 var tasks = require('./tasks');
+var log = require('./log');
 
 routes.use('/categories', categories);
 routes.use('/tasks', tasks);
+routes.use('/log', log)
 
 module.exports = routes;

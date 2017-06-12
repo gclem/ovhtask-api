@@ -9,7 +9,7 @@ routes.get('/', function (req, res) {
 
     if(!task || isNaN(task))
         res.status(400);
-console.log(req.query);
+
     scrapper.list(0, req.query.limit || 500)
         .then((data) => { 
             if (!data) 

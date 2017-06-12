@@ -6,10 +6,12 @@ var express = require('express');
 var http = require('http');
 
 var winston = require('winston');
+var morgan = require('morgan');
 var config = require('./config/default.json');
+var socketio = require('socket.io');
 
 var app = express();
-var morgan = require('morgan');
+var server = http.Server(app);
 
 /* Logger */
 var logger = new winston.Logger({
@@ -53,14 +55,21 @@ var privateKey = config.ssl && config.ssl.enabled ? fs.readFileSync(config.ssl.k
 var certificate = config.ssl && config.ssl.enabled ? fs.readFileSync(config.ssl.cert, 'utf8') : '';
 var credentials = { key: privateKey, cert: certificate };
 
+/* Setup server */
+var port = process.env.PORT || 3001;
+var server = (config.ssl && config.ssl.enabled ? http.createServer(credentials, app) : http.createServer(app))
+
+server.listen(port, function () {
+    logger.log('info', `Starting web server on port : ${port}.`);
+});
+
+/* Setup IO */
+var io = socketio(server);
+var events = require('./routes/events')(io);
+
 /* Routes */
 const routes = require('./routes/index');
 
 //  Connect all our routes to our application
 app.use('/', routes);
 
-// Setup server.
-var port = process.env.PORT || 3001;
-(config.ssl && config.ssl.enabled ? http.createServer(credentials, app) : http.createServer(app)).listen(port, function () {
-    logger.log('info', `Starting web server on port : ${port}.`);
-});
