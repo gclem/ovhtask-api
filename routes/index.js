@@ -22,9 +22,11 @@ routes.get('/', function (req, res) {
 var categories = require('./categories');
 var tasks = require('./tasks');
 var log = require('./log');
+var importer = require('./importer');
 
 routes.use('/categories', categories);
 routes.use('/tasks', tasks);
 routes.use('/log', log)
+routes.use('/importer', importer);
 
 module.exports = routes;
