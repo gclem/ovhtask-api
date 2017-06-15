@@ -5,11 +5,11 @@ var ovhtask = require('ovhtask-js');
 var scrapper = ovhtask.scrapper.get();
 var feed = ovhtask.feed.get();
 
-routes.get('/:from?/:to?', function (req, res) {
+routes.get('/:projectId?/:from?/:to?', function (req, res) {
     req.params.from = parseInt(req.params.from) || 1;
-    req.params.to = parseInt(req.params.to) || (parseInt(req.params.from) + 200);
-    console.log(req.params)
-    feed.list(req.params.from, req.params.to)
+    req.params.projectId = parseInt(req.params.projectId) || 0;
+
+    feed.list(req.params.projectId , { from : req.params.from, to : req.params.to})
     .then((data) => {
         res.json(data);
     })
@@ -17,12 +17,6 @@ routes.get('/:from?/:to?', function (req, res) {
 });
 
 routes.get('/fresh', function (req, res) {
-
-    var task = req.params.task;
-    var refresh = req.query.refresh;
-
-    if(!task || isNaN(task))
-        res.status(400);
 
     scrapper.list(0, req.query.limit || 500)
         .then((data) => { 
