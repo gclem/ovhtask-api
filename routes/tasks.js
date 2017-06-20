@@ -5,7 +5,7 @@ var ovhtask = require('ovhtask-js');
 var scrapper = ovhtask.scrapper.get();
 var feed = ovhtask.feed.get();
 
-routes.get('/:projectId?/:from?/:to?', function (req, res) {
+routes.get('/project/:projectId?/:from?/:to?', function (req, res) {
     req.params.from = parseInt(req.params.from) || 1;
     req.params.projectId = parseInt(req.params.projectId) || 0;
 
