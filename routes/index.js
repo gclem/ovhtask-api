@@ -19,12 +19,12 @@ routes.get('/', function (req, res) {
 // /* Master switch */
 // app.use('/v1', v1);
 // app.use('/', v1); // Set the default version to latest.
-var categories = require('./categories');
+var projects = require('./projects');
 var tasks = require('./tasks');
 var log = require('./log');
 var importer = require('./importer');
 
-routes.use('/categories', categories);
+routes.use('/projects', projects);
 routes.use('/tasks', tasks);
 routes.use('/log', log)
 routes.use('/importer', importer);
