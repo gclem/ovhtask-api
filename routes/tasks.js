@@ -9,6 +9,8 @@ routes.get('/project/:projectId?/:from?/:to?', function (req, res) {
     req.params.from = parseInt(req.params.from) || 1;
     req.params.projectId = parseInt(req.params.projectId) || 0;
 
+    req.params.to = parseInt(req.params.to) || null;
+    
     feed.list(req.params.projectId , { from : req.params.from, to : req.params.to})
     .then((data) => {
         res.json(data);
@@ -17,8 +19,7 @@ routes.get('/project/:projectId?/:from?/:to?', function (req, res) {
 });
 
 routes.get('/fresh', function (req, res) {
-
-    scrapper.list(0, req.query.limit || 500)
+    scrapper.list(0, { from: 1, to: (req.query.limit || 500) })
         .then((data) => { 
             if (!data) 
                 res.status(404);
@@ -28,7 +29,6 @@ routes.get('/fresh', function (req, res) {
 });
 
 routes.get('/:task', function (req, res) {
-
     var task = req.params.task;
 
     if(!task || isNaN(task))
@@ -44,13 +44,12 @@ routes.get('/:task', function (req, res) {
 });
 
 routes.get('/category/:category', function (req, res) {
-
     var category = req.params.category;
 
     if(!category || isNaN(category))
         res.status(400);
 
-    scrapper.list(category, req.query.limit || 0)
+    scrapper.list(category, { from: req.query.from || 1, to: req.query.to || 1  })
         .then((data) => res.json(data));
 });
 
