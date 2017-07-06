@@ -72,4 +72,3 @@ const routes = require('./routes/index');
 
 //  Connect all our routes to our application
 app.use('/', routes);
-
